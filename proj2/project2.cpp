@@ -26,7 +26,7 @@ vector<vector<int>> convert( vector<vector<int>> a)
     return adjList;
 }
 
-void readfile(string textfile,  vector<string> &num_resources_list, vector<vector<int>> &AdjList){
+void readfile(string textfile,  vector<int> &num_resources_list, vector<vector<int>> &AdjList,     int &num_processes,int &num_resources){
     vector<int> result;
     vector<vector<int>> a;
     ifstream configf;
@@ -51,7 +51,7 @@ void readfile(string textfile,  vector<string> &num_resources_list, vector<vecto
     int check_adjacency_matrix=0;
     /*matching an equal sign*/
     string temp_num_processes, temp_num_resources;
-    int num_processes, num_resources;
+
     if(configf.is_open()){
         /*continues if the file is opened*/
         while(getline(configf, line)){
@@ -62,7 +62,7 @@ void readfile(string textfile,  vector<string> &num_resources_list, vector<vecto
                 continue;
             }else{
         
-                cout<<line<< endl;
+                //cout<<line<< endl;
                 regex_search(line, equal, e);
              
                 if(equal.prefix().str() == "num_processes" ){
@@ -80,13 +80,17 @@ void readfile(string textfile,  vector<string> &num_resources_list, vector<vecto
                     //cout << "\nthe num_resources is:" <<num_resources<<endl;
                     check_num_units++;
                 }else if(check_num_units == 2 && check_adjacency_matrix != num_resources){ /* ready to receive list of units */
-
-                    stringstream s_stream(line); //create string stream from the string
+                    /* create string stream from the string */
+                    stringstream s_stream(line);
                     while(s_stream.good()) {
                        string substr;
-                       getline(s_stream, substr, ','); //get first string delimited by comma
+                       getline(s_stream, substr, ',');
+                        /* get first string delimited by comma */
                         if(!substr.empty()){
-                            num_resources_list.push_back(substr);
+                            int int_converted_one;
+                            stringstream int_convert_one(substr);
+                            int_convert_one >> int_converted_one;
+                            num_resources_list.push_back(int_converted_one);
                             check_adjacency_matrix++;
                         }
 
@@ -95,26 +99,26 @@ void readfile(string textfile,  vector<string> &num_resources_list, vector<vecto
                        cout <<check_adjacency_matrix<<"*"<< result.at(i) << endl;
                     } */
 
-                }else if(check_adjacency_matrix == num_resources){
-                    stringstream s_stream(line); //create string stream from the string
+                }else if(check_adjacency_matrix == num_resources){ /* starting to parse for adjacency matrix */
+                    /* create string stream from the string */
+                    stringstream s_stream(line);
                     while(s_stream.good()) {
                         string substr;
-                        getline(s_stream, substr, ','); //get first string delimited by comma
+                        /* get first string delimited by comma */
+                        getline(s_stream, substr, ',');
                         if(!substr.empty()){
-                            int int_converted;
-                            stringstream int_convert(substr);
-                            int_convert >> int_converted;
-                            result.push_back(int_converted);
-                            
+                            int int_converted_two;
+                            stringstream int_convert_two(substr);
+                            int_convert_two >> int_converted_two;
+                            result.push_back(int_converted_two);
                         }
-
                     }
                     a.push_back(result);
                     result.erase (result.begin(), result.end());
-                  for(int i = 0; i<result.size(); i++) {    //print all splitted strings
+                 /* for(int i = 0; i<result.size(); i++) {    //print all splitted strings
                         cout <<","<< result.at(i);
                     }
-                    cout << endl;
+                    cout << endl;*/
                 }
             }
         }
@@ -129,8 +133,9 @@ void readfile(string textfile,  vector<string> &num_resources_list, vector<vecto
 
 
 int main(){
-    vector<string> num_resources_list;
+    vector<int> num_resources_list;
     vector<vector<int>> AdjList ;
+    int num_processes, num_resources;
     string textfile;
     /* text file */
     cout << "Please enter the configuration file name :";
@@ -138,11 +143,16 @@ int main(){
     getline(cin, textfile);
     /*get the text file*/
     
-    readfile(textfile, num_resources_list, AdjList);
+    readfile(textfile, num_resources_list, AdjList, num_processes, num_resources);
+    cout << "\nthe num_processes is:" << num_processes <<endl;
+    cout << "\nthe num_resources is:" << num_resources<<endl;
+    
     /* print list of num_resource_list */
+    cout << "\nthe number of units of each resource:";
     for(int i = 0; i<num_resources_list.size(); i++) {
-       cout <<"*"<< num_resources_list.at(i) << endl;
+       cout << num_resources_list.at(i) <<",";
     }
+    cout << endl;
     cout<<endl<<"Adjacency List:"<<endl;
     // print the adjacency list
     int print=0;
