@@ -19,7 +19,7 @@ vector<vector<int>> convert( vector<vector<int>> a)
         {
             if (a[i][j] == 1)
             {
-                adjList[i].push_back(j);
+                adjList[i].push_back(j+1);
             }
         }
     }
@@ -162,16 +162,31 @@ int main(){
         for(int j = 0; j < AdjList[i].size(); j++)
         {
             if(print==0){
-                cout << i;
+                if(i <= num_processes){
+                    cout <<"P"<<i;
+                }else if(i >= num_resources){
+                    cout <<"R"<< (i -  num_processes);
+                }
                 print++;
             }
             if(j == AdjList[i].size() - 1)
             {
-                cout << " -> " << AdjList[i][j] << endl;
-                break;
+                /* if it is a process */
+                if(AdjList[i][j] <= num_processes){
+                    cout << " -> P" << AdjList[i][j]  << endl;
+                    break;
+                }else if(AdjList[i][j] >= num_resources){
+                    cout << " -> R" << (AdjList[i][j] - num_processes)  << endl;
+                    break;
+                }
             }
-            else
-                cout << " -> " << AdjList[i][j];
+            else{
+                if(AdjList[i][j]<=num_processes){
+                    cout << " -> P" << AdjList[i][j];
+                }else if(AdjList[i][j]>=num_resources){
+                     cout << " -> R" << (AdjList[i][j] -  num_processes);
+                }
+            }
         }
         print=0;
     }
