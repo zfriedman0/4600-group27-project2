@@ -1,8 +1,6 @@
 # Sources:
 # https://cmdlinetips.com/2018/01/3-ways-to-read-a-file-and-skip-initial-comments-in-python/
 # https://www.geeksforgeeks.org/python-converting-all-strings-in-list-to-integers/
-import re
-
 def parse_processes():
     temp = 'num_processes='
     with open('test.txt') as f:
@@ -19,14 +17,19 @@ def parse_resources():
 def parse_units(num_resources):
     with open('test.txt') as f:
         for line in f:
-            if line.startswith("%"): continue # skips comments
-            if not line.strip(): continue # skips blank lines
+            if line.startswith("%") or not line.strip(): continue # skips comments
+            #if not line.strip(): continue # skips blank lines
             if line.startswith("n"): continue # skips process/resource assignment
 
             current_line = line.strip().split(',')
             if len(current_line) == num_resources:
                 array = list(map(int, current_line))
                 return array
+
+def print_M(M):
+    print("Adjacency Matrix:")
+    for x in M:
+        print(*x)
 
 def main():
     num_processes = parse_processes()
@@ -39,30 +42,27 @@ def main():
     # skip to matrix values and assign adjacency matrix per process/resource
     Pcount = 0
     Rcount = 0
+    M = [] # The adjacency matrix
     with open('test.txt') as f:
         for line in f:
-            if line.startswith("%"): continue # skips comments
+            if line.startswith("%") or not line.strip(): continue # skips comments
             if line.startswith("n"): continue # skips process/resource assignment
-            if not line.strip(): continue # skips blank lines
+            #if : continue # skips blank lines
 
             current_line = list(map(int, line.strip().split(',')))
             if len(current_line) == num_resources: continue
 
             if current_line[0] == 0 or 1:
                 if Pcount < num_processes:
-                    print("Process:", current_line)
+                    M.append(current_line)
                     Pcount += 1
                     continue
                 if Rcount < num_resources:
-                    print("Resource:", current_line)
+                    M.append(current_line)
                     Rcount += 1
                     continue
 
-        # print("Stopped at:", current_line)
-        # #line = next(f)
-        # for x in range(0, num_processes):
-        #     print("P: ")
-
+    print_M(M)
 
     #end main()
 
