@@ -1,7 +1,7 @@
 # Sources:
 # https://cmdlinetips.com/2018/01/3-ways-to-read-a-file-and-skip-initial-comments-in-python/
+# https://www.geeksforgeeks.org/python-converting-all-strings-in-list-to-integers/
 # file = open("bar.txt", "r")
-import re
 
 def parse_processes():
     temp = 'num_processes='
@@ -28,27 +28,14 @@ def parse_resources():
 def parse_units(num_resources):
     with open('test.txt') as f:
         for line in f:
-            if line.startswith("%"): continue # skips comments
-            if line.startswith("n"): continue # skips number resource/process definition
-            if not line.strip(): continue # skips blank lines
+            if line.startswith("%"): continue
+            if line.startswith("n"): continue
+            if not line.strip(): continue
 
-            #current_line = line.split(",") # delineates commas
-            current_line = re.split(r'[,|\n]', line)
-            print(current_line)
-            # if len(current_line) == num_resources:
-            #     x = 0
-            #     num_units = [None] * num_resources
-            #     while x < (num_resources + 1):
-            #         num_units[x] = current_line[x]
-            #     #print(num_units)
-            #     return
-
-                # for x in current_line:
-                #     array[x] = current_line[x]
-                # print(current_line)
-                # return
-            # for x in current_line:
-            #     if x > 1
+            current_line = line.strip().split(',')
+            if len(current_line) == num_resources:
+                array = list(map(int, current_line))
+                return array
 
 def main():
     num_processes = parse_processes()
@@ -56,5 +43,6 @@ def main():
     num_units = parse_units(num_resources)
     print("Number of processes:", num_processes)
     print("Number of resources:", num_resources)
+    print("Units per resource: ", num_units)
 
 main()
