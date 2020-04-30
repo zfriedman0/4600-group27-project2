@@ -37,6 +37,8 @@ def main():
     print("Units per resource: ", num_units)
 
     # skip to matrix values and assign adjacency matrix per process/resource
+    Pcount = 0
+    Rcount = 0
     with open('test.txt') as f:
         for line in f:
             if line.startswith("%"): continue # skips comments
@@ -47,8 +49,14 @@ def main():
             if len(current_line) == num_resources: continue
 
             if current_line[0] == 0 or 1:
-                print("Array:", current_line)
-                continue
+                if Pcount < num_processes:
+                    print("Process:", current_line)
+                    Pcount += 1
+                    continue
+                if Rcount < num_resources:
+                    print("Resource:", current_line)
+                    Rcount += 1
+                    continue
 
         # print("Stopped at:", current_line)
         # #line = next(f)
