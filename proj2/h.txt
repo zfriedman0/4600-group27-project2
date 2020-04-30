@@ -1,0 +1,148 @@
+Start:
+P1 -> P1 -> R2
+P2 -> P2 -> R1 -> R3
+P3 -> P3
+R1 -> P1 -> P3 -> R1
+R2 -> P2 -> R2
+R3 -> P3 -> R3
+
+Is P1 a sink? No
+P1 -> P1 -> R2
+P2 -> P2 -> R1 -> R3
+P3 -> P3
+R1 -> P1 -> P3 -> R1
+R2 -> P2 -> R2
+R3 -> P3 -> R3
+
+Is P2 a sink? No
+P1 -> P1 -> R2
+P2 -> P2 -> R1 -> R3
+P3 -> P3
+R1 -> P1 -> P3 -> R1
+R2 -> P2 -> R2
+R3 -> P3 -> R3
+
+Is P3 a sink? Yes
+P1 -> P1 -> R2
+P2 -> P2 -> R1 -> R3
+P3 -> P3
+R1 -> P1 -> P3 -> R1
+R2 -> P2 -> R2
+R3 -> P3 -> R3
+ |
+ |     reduce
+ \/
+P1 -> P1 -> R2
+P2 -> P2 -> R1 -> R3
+P3 -> 
+R1 -> P1 -> * -> R1
+R2 -> P2 -> R2
+R3 -> * -> R3
+
+Is Graph fully reducible? No
+P1 -> P1 -> R2
+P2 -> P2 -> R1 -> R3
+P3 ->
+R1 -> P1 -> R1
+R2 -> P2 -> R2
+R3 -> R3
+
+Can request edges be fulfilled ? Yes
+P1 -> P1 -> R2
+P2 -> P2 -> R1 -> R3
+P3 ->
+R1 -> P1 -> R1
+R2 -> P2 -> R2
+R3 -> R3
+ |
+ |     fulfill them
+ \/
+P1 -> P1 -> R2
+P2 -> P2 
+P3 ->
+R1 -> P1 -> R1 -> P2
+R2 -> P2 -> R2
+R3 -> P2 -> R3
+
+
+Is P1 a sink ? No
+P1 -> P1 -> R2
+P2 -> P2 
+P3 ->
+R1 -> P1 -> P2 -> R1 
+R2 -> P2 -> R2
+R3 -> P2 -> R3
+
+Is P2 a sink ? Yes
+P1 -> P1 -> R2
+P2 -> P2 
+P3 ->
+R1 -> P1 -> P2 -> R1 
+R2 -> P2 -> R2
+R3 -> P2 -> R3
+ |
+ |     reduce
+ \/
+P1 -> P1 -> R2
+P2 ->  
+P3 ->
+R1 -> P1 -> * -> R1 
+R2 -> * -> R2
+R3 -> * -> R3
+
+Is Graph fully reducible?No
+P1 -> P1 -> R2
+P2 ->  
+P3 ->
+R1 -> P1 -> R1 
+R2 -> R2
+R3 -> R3
+
+Can request edges be fulfilled ? Yes
+P1 -> P1 -> R2
+P2 ->  
+P3 ->
+R1 -> P1 -> R1 
+R2 -> R2
+R3 -> R3
+ |
+ |     fulfill them
+ \/
+
+P1 -> P1 
+P2 ->  
+P3 ->
+R1 -> P1 -> R1 
+R2 -> P1 -> R2
+R3 -> R3
+
+Is P1 a sink? Yes
+P1 -> P1 
+P2 ->  
+P3 ->
+R1 -> P1 -> R1 
+R2 -> P1 -> R2
+R3 -> R3
+ |
+ |     reduce
+ \/
+
+P1 ->  
+P2 ->  
+P3 ->
+R1 -> * -> R1 
+R2 -> * -> R2
+R3 -> R3
+
+Is Graph fully reducible?Yes
+P1 ->  
+P2 ->  
+P3 ->
+R1 -> R1 
+R2 -> R2
+R3 -> R3
+ |
+ |     
+ \/
+End-success no deadlock
+]]
