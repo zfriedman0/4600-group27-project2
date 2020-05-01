@@ -1,0 +1,20 @@
+% A line starting with a % is a comment, and blank lines are skipped
+
+% First list the number of processes and resources using the keywords num_processes and num_resources. 
+%The value which corresponds to each keyword must be an integer. 
+%The keyword and its corresponding value must be separated by an equal sign (=) as demonstrated below:
+num_processes=3
+num_resources=3
+
+% Next, list the number of units of each resource in a single row, separated by commas (,)
+2,1,1
+
+% Then list the adjacency matrix. All processes will be listed first, followed by all of the resources. 
+% The order of resources in this list must be the same as the ordering of resources in the list above which specified the numer of units of each resource.
+% Each row is listed on a separate line. Columns within a row are separated by a comma (,)
+1,0,0,0,1,0
+0,1,0,1,0,1
+0,0,1,0,0,0
+1,0,1,1,0,0
+0,1,0,0,1,0
+0,0,1,0,0,1
